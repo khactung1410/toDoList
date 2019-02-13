@@ -10,7 +10,6 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            tasks : [], //id:unique , name , status
             isDisplayForm : false,
             taskEditting : null,
             filter : {
@@ -20,15 +19,6 @@ class App extends Component {
             sortBy : "name",
             sortValue : 1,
             key :""
-        }
-    }
-
-    componentWillMount(){
-        if(localStorage && localStorage.getItem('tasks')){
-            var tasks = JSON.parse(localStorage.getItem('tasks'));
-            this.setState({
-                tasks : tasks
-            })
         }
     }
 
@@ -147,44 +137,44 @@ class App extends Component {
         })
     }
     render() {
-        var {tasks , isDisplayForm ,taskEditting,filter,sortBy,sortValue,key} = this.state;// var tasks = this.state.tasks
-        if(filter){
-            if(filter.name){
-                tasks = tasks.filter((task) =>{
-                    return task.name.toLocaleLowerCase().indexOf(filter.name) !== -1;
-                })
-            }
-            tasks = tasks.filter((task)=>{
-                if(filter.status === -1){
-                    return task;
-                }
-                else{
-                    return task.status === (filter.status === 1?true:false);
-                }
-            })
-        }
-        if(sortBy === "name"){
-            tasks = tasks.sort((a,b)=>{
-                if(a.name > b.name) return sortValue;
-                else if(a.name < b.name) return -sortValue;
-                else return 0;
-            })
-        }
-        if(sortBy === "status"){
-            tasks = tasks.sort((a,b)=>{
-                if(a.status > b.status) return sortValue;
-                else if(a.status < b.status) return -sortValue;
-                else return 0;
-            })
-        }
-        if(key !== ""){
-            // tasks = tasks.filter(task =>{
-            //     return task.name.toLowerCase().indexOf(key) !== -1;
-            // })
-            tasks = _.filter(tasks,task =>{
-                return task.name.toLowerCase().indexOf(key) !== -1;
-            })
-        }
+        var {isDisplayForm ,taskEditting,filter,sortBy,sortValue,key} = this.state;
+        // if(filter){
+        //     if(filter.name){
+        //         tasks = tasks.filter((task) =>{
+        //             return task.name.toLocaleLowerCase().indexOf(filter.name) !== -1;
+        //         })
+        //     }
+        //     tasks = tasks.filter((task)=>{
+        //         if(filter.status === -1){
+        //             return task;
+        //         }
+        //         else{
+        //             return task.status === (filter.status === 1?true:false);
+        //         }
+        //     })
+        // }
+        // if(sortBy === "name"){
+        //     tasks = tasks.sort((a,b)=>{
+        //         if(a.name > b.name) return sortValue;
+        //         else if(a.name < b.name) return -sortValue;
+        //         else return 0;
+        //     })
+        // }
+        // if(sortBy === "status"){
+        //     tasks = tasks.sort((a,b)=>{
+        //         if(a.status > b.status) return sortValue;
+        //         else if(a.status < b.status) return -sortValue;
+        //         else return 0;
+        //     })
+        // }
+        // if(key !== ""){
+        //     // tasks = tasks.filter(task =>{
+        //     //     return task.name.toLowerCase().indexOf(key) !== -1;
+        //     // })
+        //     tasks = _.filter(tasks,task =>{
+        //         return task.name.toLowerCase().indexOf(key) !== -1;
+        //     })
+        // }
         var eleTaskForm = isDisplayForm
             ? <Taskform
                 onCloseForm = {this.onCloseForm}

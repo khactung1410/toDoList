@@ -6,7 +6,7 @@ var myReducer = (state = initialState,action)=>{
             newState = !newState;
             return newState;
         }
+        default: return state;
     }
-    return state;
 }
 export default myReducer;

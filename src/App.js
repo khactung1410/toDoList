@@ -22,12 +22,6 @@ class App extends Component {
         }
     }
 
-    s4(){ //tạo ra một số random
-        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    }
-    generateID(){
-        return this.s4()+ this.s4() + '-' + this.s4() + ' ' +this.s4() +this.s4() +' '+ this.s4();
-    }
     onChangeDisplayForm = ()=>{
         if(this.state.isDisplayForm && this.state.taskEditting !== null){
             this.setState({

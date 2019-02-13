@@ -1,19 +1,32 @@
 import * as types from '../constants/ActionTypes';
-import { type } from 'os';
 var data = JSON.parse(localStorage.getItem('tasks'));
 var initialState = data ? data : [];
 
 var myReducer = (state = initialState,action) => {
-    switch(action.types){
+    switch(action.type){
         case types.LIST_ALL:
             return state;
-        case type.ADD_TASK:
+        case types.ADD_TASK:
         {
-            console.log(action)
-            return state;
+            var newTask = {
+                id: generateRandomID(),
+                name: action.task.name,
+                status: action.task.status === 'true' ? true : false
+            }
+            state.push(newTask);
+            
+            //save to localStorage
+            localStorage.setItem('tasks',JSON.stringify(state));
+            return [...state];
         }
         default: return state
     }
 };
 
+var s4 = () => { //tạo ra một số random
+    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+}
+var generateRandomID = () => {
+    return s4() + s4() + '-' + s4() + ' ' +s4() +s4() +' '+ s4();
+}
 export default myReducer;

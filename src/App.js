@@ -5,12 +5,13 @@ import TaskControl from "./components/TaskControl";
 import TaskList from "./components/TaskList";
 import _ from "lodash";
 import demo from './Training/demo';
+import {connect} from 'react-redux';
+import * as actions from './actions/index';
 
 class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isDisplayForm : false,
             taskEditting : null,
             filter : {
                 name :'',
@@ -23,49 +24,25 @@ class App extends Component {
     }
 
     onChangeDisplayForm = ()=>{
-        if(this.state.isDisplayForm && this.state.taskEditting !== null){
-            this.setState({
-                isDisplayForm : true,
-                taskEditting : null
-            })
-        }else {
-            this.setState({
-                isDisplayForm : !this.state.isDisplayForm,
-                taskEditting : null
-            })
-        }
-    }
-    onCloseForm = ()=>{
-        this.setState({
-            isDisplayForm : false
-        })
+        // if(this.state.isDisplayForm && this.state.taskEditting !== null){
+        //     this.setState({
+        //         isDisplayForm : true,
+        //         taskEditting : null
+        //     })
+        // }else {
+        //     this.setState({
+        //         isDisplayForm : !this.state.isDisplayForm,
+        //         taskEditting : null
+        //     })
+        // }
+        this.props.onToggleForm();
     }
     onShowForm = ()=>{
         this.setState({
             isDisplayForm : true
         })
     }
-    onSubmit = (data)=>{
-        var {tasks} = this.state;
-        if(data.id === ''){
-            data.id = this.generateID();
-            if(data.name !== ''){
-                tasks.push(data);
-                this.setState({
-                    tasks : tasks
-                });
-            }
-        }
-        else{
-            tasks.forEach((task,index)=>{
-                if(task.id === data.id){
-                    task.name = data.name;
-                    task.status = data.status;
-                }
-            })
-        }
-        localStorage.setItem('tasks',JSON.stringify(tasks))
-    }
+
     findIndex =(id)=>{
         var {tasks} = this.state;
         var result = -1;
@@ -131,7 +108,8 @@ class App extends Component {
         })
     }
     render() {
-        var {isDisplayForm ,taskEditting,filter,sortBy,sortValue,key} = this.state;
+        var {taskEditting,filter,sortBy,sortValue,key} = this.state;
+        var {isDisplayForm} = this.props;
         // if(filter){
         //     if(filter.name){
         //         tasks = tasks.filter((task) =>{
@@ -171,8 +149,6 @@ class App extends Component {
         // }
         var eleTaskForm = isDisplayForm
             ? <Taskform
-                onCloseForm = {this.onCloseForm}
-                onSubmit={this.onSubmit}
                 taskEditting={taskEditting}/>
             :'';
         return (
@@ -218,4 +194,16 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        isDisplayForm : state.isDisplayForm
+    }
+}
+const mapDispatchToProps = (dispatch,props) =>{
+    return {
+        onToggleForm: ()=>{
+            dispatch(actions.toggleForm());
+        }       
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(App);

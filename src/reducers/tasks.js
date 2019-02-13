@@ -19,6 +19,16 @@ var myReducer = (state = initialState,action) => {
             localStorage.setItem('tasks',JSON.stringify(state));
             return [...state];
         }
+        case types.TOGGLE_FORM:{
+
+        }
+        case types.CLOSE_FORM:{
+
+        }
+        case types.OPEN_FORM:{
+            
+        }
+
         default: return state
     }
 };

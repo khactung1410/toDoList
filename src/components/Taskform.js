@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import './App.css';
 import {connect} from 'react-redux';
-import * as actions from './../actions/index'
+import * as actions from './../actions/index';
 
 class Taskform extends Component {
     constructor(props){
@@ -68,6 +68,7 @@ class Taskform extends Component {
         }
     }
     render() {
+        if(!this.props.isDisplayForm) return '';
         return (
             <div className="panel panel-warning">
                 <div className="panel-heading">
@@ -122,7 +123,8 @@ class Taskform extends Component {
 }
 const mapStateToProps = state => {
     return {
-        
+        tasks: state.tasks,
+        isDisplayForm: state.isDisplayForm
     }
 }
 const mapDispatchToProps = (dispatch,props) => {
@@ -135,4 +137,4 @@ const mapDispatchToProps = (dispatch,props) => {
         }
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Taskform);
+export default connect(mapStateToProps,mapDispatchToProps)(Taskform);   

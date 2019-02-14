@@ -23,9 +23,20 @@ var myReducer = (state = initialState,action) => {
         {
             const id = action.task.id;
             const index = findIndex(id);
-            if(index != -1){
+            if(index !== -1){
                 state.splice(index,1);
             }
+            localStorage.setItem('tasks',JSON.stringify(state));
+            return [...state];
+        };
+        case types.UPDATE_STATUS:
+        {
+            const id = action.task.id;
+            state.forEach( task => {
+                if(task.id === id) {
+                    task.status = !task.status;
+                }
+            })
             localStorage.setItem('tasks',JSON.stringify(state));
             return [...state];
         };

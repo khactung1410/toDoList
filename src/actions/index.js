@@ -32,3 +32,15 @@ export const closeForm = () => {
         type: types.CLOSE_FORM
     }
 }
+export const updateStatus = (task) => {
+    return {
+        type: types.UPDATE_STATUS,
+        task
+    }
+}
+export const editTask = (task) => {
+    return {
+        type: types.EDIT_TASK,
+        task
+    }
+}

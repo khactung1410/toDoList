@@ -5,17 +5,19 @@ import {connect} from 'react-redux';
 class TaskItem extends Component {
 
     onUpdateStatus = ()=>{
-        this.props.onUpdateStatus(this.props.task.id);
+        this.props.onUpdateStatus(this.props.task);
     }
     onDeleteItem = ()=>{
-        console.log(this.props.task)
         this.props.onDeleteItem(this.props.task);
     }
-    onEditItem = ()=>{
-        this.props.onEditItem(this.props.task.id);
+    onEditTask = ()=>{
+        this.props.onOpenForm();
+        this.props.onEditTask(this.props.task);
+        // this.props.onEditItem(this.props.task.id);
     }
     render() {
         var {task , index} = this.props;
+        console.log(task);
         return (
             <tr>
                 <td>{index+1}</td>
@@ -26,7 +28,7 @@ class TaskItem extends Component {
                         </span>
                 </td>
                 <td className="text-center">
-                    <button type="button" className="btn btn-warning" onClick={this.onEditItem}>
+                    <button type="button" className="btn btn-warning" onClick={this.onEditTask}>
                         <span className="fa fa-pencil mr-5"></span>Sửa
                     </button>
                     &nbsp;
@@ -40,13 +42,22 @@ class TaskItem extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-
+        tasks: state.tasks
     }
 }
-const mapDispatachToProps = (dispatach,props) =>{
+const mapDispatachToProps = (dispatch,props) =>{
     return {
         onDeleteItem: (task) => {
-            dispatach(actions.deleteTask(task))
+            dispatch(actions.deleteTask(task))
+        },
+        onUpdateStatus: (task) => {
+            dispatch(actions.updateStatus(task))
+        },
+        onOpenForm: () => {
+            dispatch(actions.openForm());
+        },
+        onEditTask: (task) => {
+            dispatch(actions.editTask(task));
         }
     }
 }

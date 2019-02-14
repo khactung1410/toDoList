@@ -42,18 +42,6 @@ class App extends Component {
             isDisplayForm : true
         })
     }
-    onUpdateStatus = (ID)=>{
-        var {tasks} = this.state;
-        tasks.forEach((task,index)=>{
-            if(task.id === ID){
-                task.status = !task.status
-            }
-        })
-        this.setState({
-            tasks : tasks
-        });
-        localStorage.setItem('tasks',JSON.stringify(tasks));
-    }
     onEditItem =(id) =>{
         var {tasks} = this.state;
         // var index = this.findIndex(id);
@@ -126,10 +114,6 @@ class App extends Component {
         //         return task.name.toLowerCase().indexOf(key) !== -1;
         //     })
         // }
-        var eleTaskForm = isDisplayForm
-            ? <Taskform
-                taskEditting={taskEditting}/>
-            :'';
         return (
             <div className="container">
                 <div className="text-center">
@@ -139,7 +123,7 @@ class App extends Component {
                 <div className="row">
                     <div className={isDisplayForm?"col-xs-4 col-sm-4 col-md-4 col-lg-4":""}>
                         {/*Form*/}
-                        {eleTaskForm}
+                        <Taskform taskEditting={taskEditting}/>
                     </div>
                     <div className={isDisplayForm?"col-xs-8 col-sm-8 col-md-8 col-lg-8":"col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
                         <button
@@ -159,8 +143,6 @@ class App extends Component {
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <TaskList
-                                    onUpdateStatus={this.onUpdateStatus}
-                                    onDeleteItem={this.onDeleteItem}
                                     onEditItem={this.onEditItem}
                                     onFilter = {this.onFilter}
                                 />

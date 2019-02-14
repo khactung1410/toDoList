@@ -18,17 +18,17 @@ var myReducer = (state = initialState,action) => {
             //save to localStorage
             localStorage.setItem('tasks',JSON.stringify(state));
             return [...state];
-        }
-        case types.TOGGLE_FORM:{
-
-        }
-        case types.CLOSE_FORM:{
-
-        }
-        case types.OPEN_FORM:{
-            
-        }
-
+        };
+        case types.DELETE_TASK:
+        {
+            const id = action.task.id;
+            const index = findIndex(id);
+            if(index != -1){
+                state.splice(index,1);
+            }
+            localStorage.setItem('tasks',JSON.stringify(state));
+            return [...state];
+        };
         default: return state
     }
 };
@@ -38,5 +38,13 @@ var s4 = () => { //tạo ra một số random
 }
 var generateRandomID = () => {
     return s4() + s4() + '-' + s4() + ' ' +s4() +s4() +' '+ s4();
+}
+var findIndex = (id) => {
+    console.log(111111111);
+    var indexResult = -1;
+    initialState.forEach((task,index) => {
+        if(task.id === id) indexResult = index;
+    });
+    return indexResult;
 }
 export default myReducer;

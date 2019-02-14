@@ -11,6 +11,12 @@ export const addTask = (task) => {
         task
     }
 }
+export const deleteTask = (task) => {
+    return {
+        type: types.DELETE_TASK,
+        task
+    }
+}
 export const toggleForm = () => {
     return {
         type: types.TOGGLE_FORM

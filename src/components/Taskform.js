@@ -132,7 +132,7 @@ const mapDispatchToProps = (dispatch,props) => {
         },
         onCloseForm: () =>{
             dispatch(actions.closeForm());
-        }  
+        }
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Taskform);

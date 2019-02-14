@@ -42,15 +42,6 @@ class App extends Component {
             isDisplayForm : true
         })
     }
-
-    findIndex =(id)=>{
-        var {tasks} = this.state;
-        var result = -1;
-        tasks.forEach((task,index)=>{
-            if(task.id === id) result = index;
-        });
-        return result;
-    }
     onUpdateStatus = (ID)=>{
         var {tasks} = this.state;
         tasks.forEach((task,index)=>{
@@ -62,18 +53,6 @@ class App extends Component {
             tasks : tasks
         });
         localStorage.setItem('tasks',JSON.stringify(tasks));
-    }
-    onDeleteItem = (id)=>{
-        var index = this.findIndex(id);
-        var {tasks} = this.state;
-        if(index !== -1){
-            tasks.splice(index,1);
-            this.setState({
-                tasks : tasks
-            });
-                localStorage.setItem('tasks',JSON.stringify(tasks));
-        }
-        this.onCloseForm();
     }
     onEditItem =(id) =>{
         var {tasks} = this.state;
@@ -201,9 +180,9 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch,props) =>{
     return {
-        onToggleForm: ()=>{
+        onToggleForm: () => {
             dispatch(actions.toggleForm());
-        }       
+        }
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(App);

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as actions from './../actions/index';
+import {connect} from 'react-redux';
 
 class TaskItem extends Component {
 
@@ -6,7 +8,8 @@ class TaskItem extends Component {
         this.props.onUpdateStatus(this.props.task.id);
     }
     onDeleteItem = ()=>{
-        this.props.onDeleteItem(this.props.task.id);
+        console.log(this.props.task)
+        this.props.onDeleteItem(this.props.task);
     }
     onEditItem = ()=>{
         this.props.onEditItem(this.props.task.id);
@@ -35,4 +38,16 @@ class TaskItem extends Component {
         );
     }
 }
-export default TaskItem;
+const mapStateToProps = (state) => {
+    return {
+
+    }
+}
+const mapDispatachToProps = (dispatach,props) =>{
+    return {
+        onDeleteItem: (task) => {
+            dispatach(actions.deleteTask(task))
+        }
+    }
+}
+export default connect(mapStateToProps,mapDispatachToProps)(TaskItem);
